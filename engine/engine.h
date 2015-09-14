@@ -3,6 +3,7 @@
 
 #include "cube.h"
 #include "world.h"
+#include "procedural.h"
 
 #ifndef STANDALONE
 
@@ -552,6 +553,10 @@ extern void entitiesinoctanodes();
 extern void attachentities();
 extern void freeoctaentities(cube &c);
 extern bool pointinsel(selinfo &sel, vec &o);
+
+extern void newentity(int type, int a1, int a2, int a3, int a4, int a5);
+extern extentity* newentityat(int type, vec pos, int a1, int a2, int a3, int a4, int a5, int s_idx);
+extern void newMapModelEntity(vec pos, int angle, int model, int trigger, int a4, int a5);
 
 extern void resetmap();
 extern void startmap(const char *name);

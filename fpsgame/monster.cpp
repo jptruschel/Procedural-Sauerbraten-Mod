@@ -322,14 +322,7 @@ namespace game
             mtimestart = lastmillis;
             loopv(entities::ents)
             {
-                extentity &e = *entities::ents[i];
-                if(e.type!=MONSTER) continue;
-                monster *m = new monster(e.attr2, e.attr1, e.attr3, M_SLEEP, 100, 0);  
-                monsters.add(m);
-                m->o = e.o;
-                entinmap(m);
-                updatedynentcache(m);
-                monstertotal++;
+				initNewMonster(*entities::ents[i]);
             }
         }
         teleports.setsize(0);
@@ -353,7 +346,8 @@ namespace game
         numkilled++;
         player1->frags = numkilled;
         remain = monstertotal-numkilled;
-        if(remain>0 && remain<=5) conoutf(CON_GAMEINFO, "\f2only %d monster(s) remaining", remain);
+		proceduralManager::killedMonster();
+        //if(remain>0 && remain<=5) conoutf(CON_GAMEINFO, "\f2only %d monster(s) remaining", remain);
     }
 
     void updatemonsters(int curtime)
@@ -429,5 +423,16 @@ namespace game
         alias(aname, nscore);
         conoutf(CON_GAMEINFO, "\f2TOTAL SCORE (time + time penalties): %d seconds (best so far: %d seconds)", score, bestscore);
     }
+
+	void initNewMonster(extentity &e)
+	{
+		if (e.type != MONSTER) return;
+		monster *m = new monster(e.attr2, e.attr1, e.attr3, M_SLEEP, 100, 0);
+		monsters.add(m);
+		m->o = e.o;
+		entinmap(m);
+		updatedynentcache(m);
+		monstertotal++;
+	}
 }
 

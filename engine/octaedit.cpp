@@ -1475,7 +1475,13 @@ VAR(invalidcubeguard, 0, 1, 1);
 
 void mpeditface(int dir, int mode, selinfo &sel, bool local)
 {
-    if(mode==1 && (sel.cx || sel.cy || sel.cxs&1 || sel.cys&1)) mode = 0;
+	/*char str[120];
+	sprintf(str, "mpeditface: %i, %i, %s", dir, mode, (local)?"yes":"no");
+	sprintf(str, "%s\n  sel: corner: %i, cx: %i, cxs: %i, cy: %i, cys: %i, grid: %i, orient: %i", str, sel.corner, sel.cx, sel.cxs, sel.cy, sel.cys, sel.grid, sel.orient);
+	sprintf(str, "%s\n    o.x: %i, o.y: %i, o.z: %i ; s.x: %i, s.y: %i, s.z: %i", str, sel.o.x, sel.o.y, sel.o.z, sel.s.x, sel.s.y, sel.s.z);
+	conoutf(str);
+    */
+	if(mode==1 && (sel.cx || sel.cy || sel.cxs&1 || sel.cys&1)) mode = 0;
     int d = dimension(sel.orient);
     int dc = dimcoord(sel.orient);
     int seldir = dc ? -dir : dir;
@@ -1552,7 +1558,7 @@ void mpeditface(int dir, int mode, selinfo &sel, bool local)
         sel.o[d] += sel.grid * seldir;
 }
 
-void editface(int *dir, int *mode)
+inline void editface(int *dir, int *mode)
 {
     if(noedit(moving!=0)) return;
     if(hmapedit!=1)

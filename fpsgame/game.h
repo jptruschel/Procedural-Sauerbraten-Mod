@@ -2,6 +2,7 @@
 #define __GAME_H__
 
 #include "cube.h"
+#include "procedural.h"
 
 // console message types
 
@@ -271,6 +272,7 @@ static const int msgsizes[] =               // size inclusive message token, 0 f
     N_SWITCHNAME, 0, N_SWITCHMODEL, 2, N_SWITCHTEAM, 0,
     N_INITTOKENS, 0, N_TAKETOKEN, 2, N_EXPIRETOKENS, 0, N_DROPTOKENS, 0, N_DEPOSITTOKENS, 2, N_STEALTOKENS, 0,
     N_SERVCMD, 0,
+	N_DEMOPACKET, 0,
     N_DEMOPACKET, 0,
     -1
 };
@@ -760,6 +762,7 @@ namespace game
     extern void monsterkilled();
     extern void endsp(bool allkilled);
     extern void spsummary(int accuracy);
+	extern void initNewMonster(extentity &e);
 
     // movable
     struct movable;

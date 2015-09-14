@@ -515,9 +515,13 @@ namespace entities
         {
             fpsentity &e = *(fpsentity *)ents[i];
             if(e.type != ET_MAPMODEL || !validtrigger(e.attr3)) continue;
+			
             switch(e.triggerstate)
             {
                 case TRIGGERING:
+					if (e.type == ET_MAPMODEL)
+						if (e.attr5 == 0 && proceduralManager::openDoorAt(e.o.x, e.o.y, e.o.z))
+							e.attr5 = 1;
                 case TRIGGER_RESETTING:
                     if(lastmillis-e.lasttrigger>=1000)
                     {

@@ -872,6 +872,9 @@ static int keepents = 0;
 
 extentity *newentity(bool local, const vec &o, int type, int v1, int v2, int v3, int v4, int v5, int &idx)
 {
+	/*char str[30];
+	sprintf(str, "newentity: %s, %i, %i, %i, %i, %i, %i", (local)?"true":"false", type, v1, v2, v3, v4, v5);
+	conoutf(str);*/
     vector<extentity *> &ents = entities::getents();
     if(local)
     {
@@ -895,7 +898,7 @@ extentity *newentity(bool local, const vec &o, int type, int v1, int v2, int v3,
     e.light.dir = vec(0, 0, 1);
     if(local)
     {
-        switch(type)
+        /*switch(type)
         {
                 case ET_MAPMODEL:
                 case ET_PLAYERSTART:
@@ -905,9 +908,9 @@ extentity *newentity(bool local, const vec &o, int type, int v1, int v2, int v3,
                     e.attr2 = e.attr1;
                     e.attr1 = (int)camera1->yaw;
                     break;
-        }
+        }*/
         entities::fixentity(e);
-    }
+	}
     if(ents.inrange(idx)) { entities::deleteentity(ents[idx]); ents[idx] = &e; }
     else { idx = ents.length(); ents.add(&e); }
     return &e;
@@ -923,6 +926,31 @@ void newentity(int type, int a1, int a2, int a3, int a4, int a5)
     enttoggle(idx);
     makeundoent();
     entedit(idx, e.type = type);
+}
+
+extentity *newentityat(int type, vec pos, int a1, int a2, int a3, int a4, int a5, int s_idx)
+{
+	int idx=s_idx;
+	extentity *t = newentity(true, pos, type, a1, a2, a3, a4, a5, idx);
+	if (!t) return NULL;
+	//dropentity(*t, 3);
+	t->type = ET_EMPTY;
+	enttoggle(idx);
+	makeundoent();
+	t->type = type;
+	entedit(idx, e.type = type);
+	return t;
+}
+
+void newMapModelEntity(vec pos, int angle, int model, int trigger, int a4, int a5) {
+	int idx=a4;
+	extentity *t = newentity(true, pos, ET_MAPMODEL, angle, model, trigger, a4, a5, idx);
+	if (!t) return;
+	//dropentity(*t);
+	t->type = ET_EMPTY;
+	enttoggle(idx);
+	makeundoent();
+	entedit(idx, e.type = ET_MAPMODEL);
 }
 
 void newent(char *what, int *a1, int *a2, int *a3, int *a4, int *a5)

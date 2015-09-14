@@ -1207,6 +1207,8 @@ int main(int argc, char **argv)
 
     if(initscript) execute(initscript);
 
+	proceduralManager::initCommands();
+
     logoutf("init: mainloop");
 
     initmumble();
